@@ -85,4 +85,8 @@ public class UserController {
             @RequestParam(value = "key", required = false) String key){
         return ResponseEntity.ok(companyService.getAllCompaniesName(key));
     }
+    @GetMapping("notice")
+    public ResponseEntity<Notice>getNoticeById(Integer id){
+        return ResponseEntity.ok(noticeService.getNoticeById(id));
+    }
 }

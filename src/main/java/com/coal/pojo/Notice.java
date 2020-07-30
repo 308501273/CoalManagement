@@ -56,8 +56,18 @@ public class Notice {
      */
     @Column(name = "reviewer_id")
     private Integer reviewerId;
+    /**
+     * 审核备注
+     */
+    private String remark;
+    /**
+     * 发布人姓名
+     */
     @Transient
     private String publisher;
+    /**
+     * 审核人姓名
+     */
     @Transient
     private String reviewer;
 

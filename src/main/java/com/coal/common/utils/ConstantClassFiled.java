@@ -1,6 +1,10 @@
 package com.coal.common.utils;
 
 public class ConstantClassFiled {
+    public static final Integer NOTICE_APPROVAL_STATUS = 0;                   //文章审核状态
+    public static final Integer NOTICE_NORMAL_STATUS = 1;                     //文章通过状态
+    public static final Integer NOTICE_REFUSE_STATUS = 2;                     //文章拒绝状态
+    public static final Integer NOTICE_DELETE_STATUS = 3;                     //文章拒绝状态
     public static final Integer APPROVAL_STATUS = 0;                                  //审核状态
     public static final Integer NORMAL_STATUS = 1;                                    //正常状态
     public static final Integer USER_ROLE_ID = 1;

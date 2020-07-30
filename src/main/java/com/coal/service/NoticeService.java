@@ -38,8 +38,8 @@ public class NoticeService {
             String orderByClause = sortBy + (desc ? " DESC" : " ASC");
             example.setOrderByClause(orderByClause);
         }
-;
-        example.and(example.createCriteria().andEqualTo("status", ConstantClassFiled.NORMAL_STATUS));
+        ;
+        example.and(example.createCriteria().andEqualTo("status", ConstantClassFiled.NOTICE_NORMAL_STATUS));
         List<Notice> noticeList = noticeMapper.selectByExample(example);
 
         if (CollectionUtils.isEmpty(noticeList)) {
@@ -63,20 +63,24 @@ public class NoticeService {
         notice.setCreateTime(new Date());
         notice.setLastUpdateTime(new Date());
         notice.setReviewerId(null);
-        notice.setStatus(ConstantClassFiled.APPROVAL_STATUS);
+        notice.setStatus(ConstantClassFiled.NOTICE_APPROVAL_STATUS);
         if (notice.getPublisherId() == null)
             throw new CoalException(ExceptionEnum.INVALID_REQUEST_PARAM);
         return noticeMapper.insert(notice);
     }
 
     public Notice getNoticeById(Integer id) {
-        Notice notice = noticeMapper.selectByPrimaryKey(id);
-        notice.setPublisher(userMapper.selectByPrimaryKey(notice.getPublisherId()).getName());
+        Notice notice = new Notice();
+        notice.setId(id);
+        notice.setStatus(ConstantClassFiled.NOTICE_NORMAL_STATUS);
+        notice = noticeMapper.selectOne(notice);
+        if (notice != null)
+            notice.setPublisher(userMapper.selectByPrimaryKey(notice.getPublisherId()).getName());
         return notice;
     }
 
     public Integer updateNoticeById(Notice notice) {
-        notice.setStatus(ConstantClassFiled.APPROVAL_STATUS);
+        notice.setStatus(ConstantClassFiled.NOTICE_APPROVAL_STATUS);
         return noticeMapper.updateByPrimaryKeySelective(notice);
     }
 }

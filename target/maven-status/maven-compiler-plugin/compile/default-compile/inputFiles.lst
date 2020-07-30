@@ -14,6 +14,7 @@
 /home/zhaodi/IdeaProjects/CoalManagement/src/main/java/com/coal/mapper/NoticeMapper.java
 /home/zhaodi/IdeaProjects/CoalManagement/src/main/java/com/coal/mapper/PurchaseApplicationMapper.java
 /home/zhaodi/IdeaProjects/CoalManagement/src/main/java/com/coal/pojo/PurchaseApplication.java
+/home/zhaodi/IdeaProjects/CoalManagement/src/main/java/com/coal/service/ReviewerService.java
 /home/zhaodi/IdeaProjects/CoalManagement/src/main/java/com/coal/contorller/TestController.java
 /home/zhaodi/IdeaProjects/CoalManagement/src/main/java/com/coal/service/PublisherService.java
 /home/zhaodi/IdeaProjects/CoalManagement/src/main/java/com/coal/common/utils/CheckUtils.java
@@ -21,6 +22,7 @@
 /home/zhaodi/IdeaProjects/CoalManagement/src/main/java/com/coal/pojo/Permission.java
 /home/zhaodi/IdeaProjects/CoalManagement/src/main/java/com/coal/pojo/Assessment.java
 /home/zhaodi/IdeaProjects/CoalManagement/src/main/java/com/coal/service/UserService.java
+/home/zhaodi/IdeaProjects/CoalManagement/src/main/java/com/coal/contorller/ReviewerController.java
 /home/zhaodi/IdeaProjects/CoalManagement/src/main/java/com/coal/mapper/RoleMapper.java
 /home/zhaodi/IdeaProjects/CoalManagement/src/main/java/com/coal/common/utils/PageResult.java
 /home/zhaodi/IdeaProjects/CoalManagement/src/main/java/com/coal/mapper/AuthorizationMapper.java
