@@ -1,6 +1,6 @@
 server:
-#  port: 8080
-  port: 443
+  port: 8080
+#  port: 443
   ssl:
     key-store: classpath:www.tianyaguet.club.jks
     key-store-password: 5k7b37kiw68tis

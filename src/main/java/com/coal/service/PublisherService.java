@@ -50,15 +50,17 @@ public class PublisherService {
         return noticeMapper.updateByPrimaryKeySelective(notice);
     }
 
-    public PageResult<Notice> getNotices(Integer page, Integer rows, String sortBy, boolean desc, String key, Integer publisherId) {
+    public PageResult<Notice> getNotices(Integer page, Integer rows, String sortBy, boolean desc,Integer status, String key,String value, Integer publisherId) {
         if (publisherId == null || publisherId <= 0)
             throw new CoalException(ExceptionEnum.INVALID_REQUEST_PARAM);
         PageHelper.startPage(page, rows);
 
         Example example = new Example(Notice.class);
-        if (StringUtils.isNotBlank(key)) {
-            example.createCriteria().orLike("title", "%" + key + "%")
-                    .orLike("content", "%" + key + "%");
+        if (StringUtils.isNotBlank(key)&&StringUtils.isNotBlank(value)) {
+            example.createCriteria().orLike(key, "%" + value + "%");
+        }
+        if(status!=null){
+            example.and(example.createCriteria().andEqualTo("status",status));
         }
         if (StringUtils.isNotBlank(sortBy)) {
             String orderByClause = sortBy + (desc ? " DESC" : " ASC");
