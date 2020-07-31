@@ -208,5 +208,10 @@ public class PurchaseApplication {
      */
     private Integer status;
 
-
+    /**
+     * 正在处理申请单的公司
+     */
+    private Integer executingCompanyId;
+    @Transient
+    private String executingCompanyName;
 }

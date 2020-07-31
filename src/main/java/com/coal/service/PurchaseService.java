@@ -8,6 +8,7 @@ import com.coal.mapper.CompanyMapper;
 import com.coal.mapper.PurchaseApplicationMapper;
 import com.coal.mapper.UserMapper;
 import com.coal.pojo.Coal;
+import com.coal.pojo.Company;
 import com.coal.pojo.PurchaseApplication;
 import com.coal.pojo.User;
 import com.github.pagehelper.PageHelper;
@@ -18,7 +19,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 import tk.mybatis.mapper.entity.Example;
 
-import javax.persistence.Id;
 import java.util.List;
 
 @Service
@@ -52,7 +52,12 @@ public class PurchaseService {
         }
         PageInfo<PurchaseApplication> result = new PageInfo<>(purchaseList);
         for (PurchaseApplication purchase : purchaseList) {
-            purchase.setApplicantCompanyName(companyMapper.selectByPrimaryKey(purchase.getApplicantCompanyId()).getName());
+            Company applicantCompany = companyMapper.selectByPrimaryKey(purchase.getApplicantCompanyId());
+            if (applicantCompany != null)
+                purchase.setApplicantCompanyName(applicantCompany.getName());
+            Company executingCompany = companyMapper.selectByPrimaryKey(purchase.getExecutingCompanyId());
+            if (executingCompany != null)
+                purchase.setExecutingCompanyName(executingCompany.getName());
             User issuer = userMapper.selectByPrimaryKey(purchase.getIssuerId());
             if (issuer != null)
                 purchase.setIssuserName(issuer.getName());
@@ -64,5 +69,9 @@ public class PurchaseService {
                 purchase.setCoalVarietyName(coal.getName());
         }
         return new PageResult<>(result.getTotal(), page, purchaseList.size(), purchaseList, rows);
+    }
+
+    public PurchaseApplication getPurchaseApplicationById(Integer id) {
+        return purchaseMapper.selectByPrimaryKey(id);
     }
 }

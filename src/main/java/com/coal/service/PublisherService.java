@@ -135,4 +135,5 @@ public class PublisherService {
 
         return noticeMapper.updateByExampleSelective(notice, example);
     }
+
 }
