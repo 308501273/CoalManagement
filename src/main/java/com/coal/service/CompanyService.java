@@ -92,4 +92,26 @@ public class CompanyService {
                 .map(CompanyService::apply).collect(Collectors.toList());
         return companiesNames;
     }
+    public List<Company> getChirldCompanies(Integer companyId,List<Company> chirldCompanies){
+        if(chirldCompanies.size()==0)
+            chirldCompanies.add( companyMapper.selectByPrimaryKey(companyId));
+        Company company = new Company();
+        company.setParentid(companyId);
+        List<Company> companyList = companyMapper.select(company);
+        if(CollectionUtils.isEmpty(companyList))
+            return  null;
+        else{
+            chirldCompanies.addAll(companyList);
+            for (Company chirldCompany : companyList) {
+                getChirldCompanies(chirldCompany.getId(), chirldCompanies) ;
+            }
+            return chirldCompanies;
+        }
+    }
+
+    public List<Integer> getChirldCompanies(Integer id){
+        List<Company> chirldCompanies = getChirldCompanies(id, new ArrayList<Company>());
+        List<Integer> ids = chirldCompanies.stream().sorted((o1,o2)->o1.getId()>o2.getId()?1:-1).map(Company::getId).collect(Collectors.toList());
+        return ids;
+    }
 }

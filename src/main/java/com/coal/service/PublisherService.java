@@ -47,7 +47,7 @@ public class PublisherService {
         newNotice.setContent(notice.getContent());
         newNotice.setLastUpdateTime(new Date());
         newNotice.setStatus(ConstantClassFiled.NOTICE_APPROVAL_STATUS);
-        return noticeMapper.updateByPrimaryKeySelective(notice);
+        return noticeMapper.updateByPrimaryKeySelective(newNotice);
     }
 
     public PageResult<Notice> getNotices(Integer page, Integer rows, String sortBy, boolean desc,Integer status, String key,String value, Integer publisherId) {

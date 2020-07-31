@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.persistence.Id;
 
 @RestController
 @RequestMapping("purchase")
@@ -23,15 +22,20 @@ public class PurchaseController {
             @RequestParam(value = "status",required = false)Integer status,
             @RequestParam(value = "desc", defaultValue = "false") boolean desc,
             @RequestParam(value = "key", required = false) String key,
-            @RequestParam(value = "value",required = false) String value
+            @RequestParam(value = "value",required = false) String value,
+            Integer userId
     ){
-        return ResponseEntity.ok(purchaseService.getPurchaseApplications(page,rows,sortBy,status,desc,key,value));
+        return ResponseEntity.ok(purchaseService.getPurchaseApplications( userId,page,rows,sortBy,status,desc,key,value));
     }
     @GetMapping
     public ResponseEntity<PurchaseApplication> getPurchaseApplicationById(Integer id){
         return ResponseEntity.ok(purchaseService.getPurchaseApplicationById(id));
     }
-
-
+    @PutMapping
+    public ResponseEntity<Integer> checkPurchaseApplication(Integer checkUserId,Integer id,
+                                                            @RequestParam(required = false) String remark,Integer options,
+                                                            @RequestParam(defaultValue = "true")Boolean isReportUp ){
+        return ResponseEntity.ok(purchaseService.checkPurchaseApplication(checkUserId,id,remark,options,isReportUp));
+    }
 
 }
