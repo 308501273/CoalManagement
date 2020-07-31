@@ -12,26 +12,40 @@ public class PurchaseApplication {
      * 主键id
      */
     @Id
-
     private Integer id;
 
     /**
      * 申请单位
      */
-    @Column(name = "applicant_company")
-    private String applicantCompany;
+    @Column(name = "applicant_company_Id")
+    private Integer applicantCompanyId;
+    /**
+     * 申请单位名字
+     */
+    @Transient
+    private String applicantCompanyName;
 
     /**
-     * 申请人
+     * 申请人ID
      */
-    private String applicant;
+    @Column(name = "applicant_id")
+    private Integer applicantId;
+    /**
+     * 申请人姓名
+     */
+    @Transient
+    private String applicantName;
 
     /**
-     * 签发人
+     * 签发人ID
      */
-    @Column(name = "Issuer")
-    private String issuer;
-
+    @Column(name = "issuer_id")
+    private Integer issuerId;
+    /**
+     * 签发人姓名
+     */
+    @Transient
+    private String issuserName;
     /**
      * 申请日期
      */
@@ -54,7 +68,10 @@ public class PurchaseApplication {
      * 煤种
      */
     @Column(name = "coal_variety")
-    private String coalVariety;
+    private Integer coalVarietyId;
+
+    @Transient
+    private String coalVarietyName;
 
     /**
      * 采购数量

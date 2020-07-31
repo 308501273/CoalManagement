@@ -11,7 +11,7 @@
  Target Server Version : 50727
  File Encoding         : 65001
 
- Date: 30/07/2020 16:17:15
+ Date: 31/07/2020 14:16:16
 */
 
 SET NAMES utf8mb4;
@@ -72,6 +72,36 @@ CREATE TABLE `tb_authorization` (
 -- Records of tb_authorization
 -- ----------------------------
 BEGIN;
+COMMIT;
+
+-- ----------------------------
+-- Table structure for tb_coal
+-- ----------------------------
+DROP TABLE IF EXISTS `tb_coal`;
+CREATE TABLE `tb_coal` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of tb_coal
+-- ----------------------------
+BEGIN;
+INSERT INTO `tb_coal` VALUES (1, '无烟煤');
+INSERT INTO `tb_coal` VALUES (2, '贫煤');
+INSERT INTO `tb_coal` VALUES (3, '贫瘦煤');
+INSERT INTO `tb_coal` VALUES (4, '瘦煤');
+INSERT INTO `tb_coal` VALUES (5, '焦煤');
+INSERT INTO `tb_coal` VALUES (6, '肥煤');
+INSERT INTO `tb_coal` VALUES (7, '1/3焦煤');
+INSERT INTO `tb_coal` VALUES (8, '气肥煤');
+INSERT INTO `tb_coal` VALUES (9, '气煤');
+INSERT INTO `tb_coal` VALUES (10, '1/2中粘煤');
+INSERT INTO `tb_coal` VALUES (11, '弱粘煤');
+INSERT INTO `tb_coal` VALUES (12, '不粘煤');
+INSERT INTO `tb_coal` VALUES (13, '长焰煤');
+INSERT INTO `tb_coal` VALUES (14, '褐煤');
 COMMIT;
 
 -- ----------------------------
@@ -189,19 +219,19 @@ COMMIT;
 -- ----------------------------
 DROP TABLE IF EXISTS `tb_purchase_application`;
 CREATE TABLE `tb_purchase_application` (
-  `id` int(11) NOT NULL COMMENT '主键id',
-  `applicant_company` varchar(255) NOT NULL COMMENT '申请单位',
-  `applicant` varchar(255) NOT NULL COMMENT '申请人',
-  `Issuer` varchar(255) NOT NULL COMMENT '签发人',
-  `application_date` varchar(255) NOT NULL COMMENT '申请日期',
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '主键id',
+  `applicant_company_id` int(11) NOT NULL COMMENT '申请单位ID',
+  `applicant_id` int(11) NOT NULL COMMENT '申请人ID',
+  `issuer_id` int(11) NOT NULL COMMENT '签发人ID',
+  `application_date` datetime NOT NULL COMMENT '申请日期',
   `delivery_start_time` datetime NOT NULL COMMENT '缴费开始时间',
   `delivery_end_time` datetime NOT NULL COMMENT '缴费截止时间',
-  `coal_variety` varchar(255) NOT NULL COMMENT '煤种',
-  `quantity` double(20,4) NOT NULL COMMENT '采购数量',
-  `transport` varchar(255) NOT NULL COMMENT '运输方式',
+  `coal_variety` int(3) NOT NULL COMMENT '煤种id',
+  `quantity` double(20,4) NOT NULL COMMENT '采购数量(单位:万吨)',
+  `transport` int(1) NOT NULL COMMENT '运输方式(1.海运2.陆运3.其他)',
   `destination` varchar(255) NOT NULL COMMENT '交货地点',
-  `settlement` varchar(255) NOT NULL COMMENT '结算方式',
-  `Inspection` varchar(255) NOT NULL COMMENT '验货方式',
+  `settlement` int(1) NOT NULL COMMENT '结算方式(1.现金2.支票3.其他)',
+  `Inspection` int(1) NOT NULL COMMENT '验货方式(1.现场核验2.第三方核验3.其他)',
   `price_ceiling` double(20,4) DEFAULT NULL COMMENT '最高限价',
   `floor_price` double(20,4) DEFAULT NULL COMMENT '最低限价',
   `payment` varchar(255) NOT NULL COMMENT '结算方式',
@@ -222,12 +252,20 @@ CREATE TABLE `tb_purchase_application` (
   `remarks` varchar(255) DEFAULT NULL COMMENT '备注',
   `status` int(1) NOT NULL COMMENT '状态',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of tb_purchase_application
 -- ----------------------------
 BEGIN;
+INSERT INTO `tb_purchase_application` VALUES (1, 1, 1, 2, '2020-07-31 13:50:41', '2020-08-01 13:50:45', '2020-08-05 13:50:50', 1, 500.0000, 1, '山东省青岛市', 1, 1, 5.0000, 4.3000, '1', 10.0000, 10.0000, 10.0000, 10.0000, 10.0000, 10.0000, 10.0000, 10.0000, 10.0000, 10.0000, 10.0000, 10.0000, 10.0000, 10.0000, '10', 1);
+INSERT INTO `tb_purchase_application` VALUES (2, 1, 1, 2, '2020-07-31 13:50:41', '2020-08-01 13:50:45', '2020-08-05 13:50:50', 1, 500.0000, 1, '山东省青岛市', 1, 1, 5.0000, 4.3000, '1', 10.0000, 10.0000, 10.0000, 10.0000, 10.0000, 10.0000, 10.0000, 10.0000, 10.0000, 10.0000, 10.0000, 10.0000, 10.0000, 10.0000, '10', 1);
+INSERT INTO `tb_purchase_application` VALUES (3, 1, 1, 2, '2020-07-31 13:50:41', '2020-08-01 13:50:45', '2020-08-05 13:50:50', 2, 500.0000, 1, '山东省青岛市', 1, 1, 5.0000, 4.3000, '1', 10.0000, 10.0000, 10.0000, 10.0000, 10.0000, 10.0000, 10.0000, 10.0000, 10.0000, 10.0000, 10.0000, 10.0000, 10.0000, 10.0000, '10', 1);
+INSERT INTO `tb_purchase_application` VALUES (4, 1, 1, 2, '2020-07-31 13:50:41', '2020-08-01 13:50:45', '2020-08-05 13:50:50', 2, 500.0000, 1, '山东省青岛市', 1, 1, 5.0000, 4.3000, '1', 10.0000, 10.0000, 10.0000, 10.0000, 10.0000, 10.0000, 10.0000, 10.0000, 10.0000, 10.0000, 10.0000, 10.0000, 10.0000, 10.0000, '10', 1);
+INSERT INTO `tb_purchase_application` VALUES (5, 1, 1, 2, '2020-07-31 13:50:41', '2020-08-01 13:50:45', '2020-08-05 13:50:50', 2, 500.0000, 1, '山东省青岛市', 1, 1, 5.0000, 4.3000, '1', 10.0000, 10.0000, 10.0000, 10.0000, 10.0000, 10.0000, 10.0000, 10.0000, 10.0000, 10.0000, 10.0000, 10.0000, 10.0000, 10.0000, '10', 1);
+INSERT INTO `tb_purchase_application` VALUES (6, 1, 1, 2, '2020-07-31 13:50:41', '2020-08-01 13:50:45', '2020-08-05 13:50:50', 3, 500.0000, 1, '山东省青岛市', 1, 1, 5.0000, 4.3000, '1', 10.0000, 10.0000, 10.0000, 10.0000, 10.0000, 10.0000, 10.0000, 10.0000, 10.0000, 10.0000, 10.0000, 10.0000, 10.0000, 10.0000, '10', 1);
+INSERT INTO `tb_purchase_application` VALUES (7, 1, 1, 2, '2020-07-31 13:50:41', '2020-08-01 13:50:45', '2020-08-05 13:50:50', 3, 500.0000, 1, '山东省青岛市', 1, 1, 5.0000, 4.3000, '1', 10.0000, 10.0000, 10.0000, 10.0000, 10.0000, 10.0000, 10.0000, 10.0000, 10.0000, 10.0000, 10.0000, 10.0000, 10.0000, 10.0000, '10', 1);
+INSERT INTO `tb_purchase_application` VALUES (8, 1, 1, 2, '2020-07-31 13:50:41', '2020-08-01 13:50:45', '2020-08-05 13:50:50', 3, 500.0000, 1, '山东省青岛市', 1, 1, 5.0000, 4.3000, '1', 10.0000, 10.0000, 10.0000, 10.0000, 10.0000, 10.0000, 10.0000, 10.0000, 10.0000, 10.0000, 10.0000, 10.0000, 10.0000, 10.0000, '10', 1);
 COMMIT;
 
 -- ----------------------------
@@ -280,7 +318,7 @@ CREATE TABLE `tb_user` (
 -- Records of tb_user
 -- ----------------------------
 BEGIN;
-INSERT INTO `tb_user` VALUES (2, 'zhaodi', '8347614cef9dbd0696187c88ee7ff44d', '赵迪', '13006930979', '308501273@qq.com', 1, 1, '技术研发部', 1, 'a609b7bad2ed46699fb840a7c3537ee3', '2020-07-23 16:44:18', '2020-07-30 14:22:55');
+INSERT INTO `tb_user` VALUES (2, 'zhaodi', '8347614cef9dbd0696187c88ee7ff44d', '赵迪', '13006930979', '308501273@qq.com', 1, 1, '技术研发部', 1, 'a609b7bad2ed46699fb840a7c3537ee3', '2020-07-23 16:44:18', '2020-07-31 14:02:22');
 INSERT INTO `tb_user` VALUES (3, 'zhaodi', '5ec777cf2ea2799e69fa588163239ad9', '赵迪', '13006930979', '308501273@qq.com', 1, 1, '技术研发部', 1, '174def50813245bb9a9b9836da908dbd', '2020-07-24 11:24:13', NULL);
 INSERT INTO `tb_user` VALUES (4, 'zhaodi', 'cd0f20bab79c22025a4e6ecee264e126', '赵迪', '13006930979', '308501273@qq.com', 1, 1, '技术研发部', 1, '75fe8f64e1b341719f1cf23c98d4f3a7', '2020-07-24 14:23:20', NULL);
 INSERT INTO `tb_user` VALUES (5, 'zhaodi', '714772cc52e6a7bcb5393bd4373d6624', 'fengenchun', '12345678912', '123456789@qq.com', 1, 1, '12', 1, '5b05dcde5d814fb0a65aebb19b959231', '2020-07-24 17:10:37', NULL);

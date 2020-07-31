@@ -10,6 +10,7 @@ import lombok.NoArgsConstructor;
 public enum ExceptionEnum {
     ILLEGAL_DELETE_REQUEST(403,"非法删除请求"),
     INVALID_REQUEST_PARAM(400,"请求参数非法"),
+    PURCHASE_NOT_FOUND (404,"未找到符合条件的公告"),
     NOTICE_NOT_FOUND (404,"未找到符合条件的公告"),
     ROLE_NOT_FOUND (404,"角色不存在"),
     COMPANY_NOT_FOUND (404,"公司未找到"),

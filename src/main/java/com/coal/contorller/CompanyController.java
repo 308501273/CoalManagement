@@ -50,5 +50,4 @@ public class CompanyController {
         return ResponseEntity.status(HttpStatus.ACCEPTED).body(companyService.updateCompany(company));
     }
 
-
 }
