@@ -1,24 +1,28 @@
 package com.coal.service.impl;
 
 import com.coal.common.exception.CoalException;
-import com.coal.common.utils.CheckUtils;
-import com.coal.common.utils.CodeUtils;
-import com.coal.common.utils.ConstantClassFiled;
-import com.coal.common.utils.ExceptionEnum;
+import com.coal.common.utils.*;
 import com.coal.mapper.CompanyMapper;
 import com.coal.mapper.RoleMapper;
 import com.coal.mapper.UserMapper;
 import com.coal.pojo.Coal;
 import com.coal.pojo.User;
 import com.coal.service.UserService;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.amqp.core.AmqpTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 import tk.mybatis.mapper.entity.Example;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
+@Slf4j
 @Service
 public class UserServiceImpl implements UserService {
 
@@ -28,8 +32,17 @@ public class UserServiceImpl implements UserService {
     private CompanyMapper companyMapper;
     @Autowired
     private RoleMapper roleMapper;
+    @Autowired
+    private StringRedisTemplate redisTemplate;
+    @Autowired
+    private AmqpTemplate amqpTemplate;
 
-    public Integer register(User user) {
+    public Integer register(User user, String code) {
+        if (user.getPhone() == null)
+            throw new CoalException(ExceptionEnum.INVAILID_USER_DATA_TYPE);
+        String key = Tool.getRedisKey(user.getPhone());
+        if (!code.equals(redisTemplate.opsForValue().get(key)))
+            throw new CoalException(ExceptionEnum.VERIFICATION_CODE_ERROR);
         user.setId(null);
         user.setStatus(ConstantClassFiled.NORMAL_STATUS);
         String salt = CodeUtils.generateSalt();
@@ -37,8 +50,18 @@ public class UserServiceImpl implements UserService {
         user.setPassword(CodeUtils.md5Hex(user.getPassword(), salt));
         user.setCreateTime(new Date());
         user.setRoleId(ConstantClassFiled.USER_ROLE_ID);
-        return userMapper.insert(user);
+        int flag=userMapper.insert(user) ;
+        if (flag==1) {
+            try {
+                redisTemplate.delete(key);
+            } catch (Exception e) {
+                log.error("【用户服务】删除Redis邮箱验证码失败，code：{}", code, e);
+            }
+        }
+        return flag;
     }
+
+
 
     public Integer updateInfo(User user) {
         user.setStatus(null);
@@ -125,5 +148,27 @@ public class UserServiceImpl implements UserService {
 
         int count = userMapper.selectCount(record);
         return count == 0;
+    }
+    public void sendMessageCode(String phone) {
+        Map<String, String> msg = new HashMap<>();
+        String code = NumberUtils.generateCode(6);
+        msg.put("phone", phone);
+        msg.put("code", code);
+        amqpTemplate.convertAndSend("coal.sms.exchange", "coal.sms.code", msg);
+        String key = Tool.getRedisKey(phone);
+        //保存验证码
+        redisTemplate.opsForValue().set(key, code, 5, TimeUnit.MINUTES);
+    }
+
+    @Override
+    public void test(String phone, String code) {
+        String key = Tool.getRedisKey(phone);
+        if (!code.equals(redisTemplate.opsForValue().get(key)))
+            throw new CoalException(ExceptionEnum.VERIFICATION_CODE_ERROR);
+        try {
+            redisTemplate.delete(key);
+        } catch (Exception e) {
+            log.error("【用户服务】删除Redis邮箱验证码失败，code：{}", code, e);
+        }
     }
 }

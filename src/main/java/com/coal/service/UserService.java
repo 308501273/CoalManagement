@@ -5,7 +5,7 @@ import com.coal.pojo.User;
 
 public interface UserService {
 
-    Integer register(User user);
+    Integer register(User user,String code);
 
     Integer updateInfo(User user);
 
@@ -20,4 +20,8 @@ public interface UserService {
     Boolean updatePassword(Integer id, String oldpwd, String newpwd);
 
     Boolean checkData(String data, Integer type);
+
+    void sendMessageCode(String phone);
+
+    void test(String phone, String code);
 }

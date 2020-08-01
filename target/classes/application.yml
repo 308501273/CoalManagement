@@ -1,6 +1,6 @@
 server:
-  port: 8080
-#  port: 443
+#  port: 8080
+  port: 443
   ssl:
     key-store: classpath:www.tianyaguet.club.jks
     key-store-password: 5k7b37kiw68tis
@@ -11,3 +11,28 @@ spring:
     driver-class-name: com.mysql.jdbc.Driver
     username: root
     password: '053073@Zd'
+  redis:
+    jedis:
+      pool:
+        max-active: 100
+        max-idle: 10
+    host: 111.230.9.54
+    port: 6379
+    password: '053073'
+  rabbitmq:
+    host: 111.230.9.54
+    username: zhaodi
+    password: '053073'
+    virtual-host: /
+coal:
+  mailbox:
+    effectiveTime: "5"
+    authCode: sjitgecsrmxqbghi
+    emailSender: 308501273@qq.com
+  sms:
+    effectiveTime: "5"
+    codeTemplateId: 431479
+    appid: 1400257967
+    appkey: 280d48bca23de50eebe97a35f314fb2b
+    smsSign: "赵迪的项目实战	"
+    nationCode: "86"

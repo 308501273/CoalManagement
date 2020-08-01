@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public enum ExceptionEnum {
+    VERIFICATION_CODE_ERROR(403,"验证码错误！"),
     ILLEGAL_DELETE_REQUEST(403,"非法删除请求"),
     INVALID_REQUEST_PARAM(400,"请求参数非法"),
     PURCHASE_NOT_FOUND (404,"未找到符合条件的申请采购单"),

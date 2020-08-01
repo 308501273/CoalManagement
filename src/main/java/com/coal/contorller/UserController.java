@@ -21,7 +21,7 @@ public interface UserController {
      * @param user
      * @return
      */
-     ResponseEntity<Integer> register(User user);
+     ResponseEntity<Integer> register(User user,String code);
 
     /**
      * 更新用户信息
