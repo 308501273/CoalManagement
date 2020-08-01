@@ -16,6 +16,7 @@ public enum ExceptionEnum {
     COMPANY_NOT_FOUND (404,"公司未找到"),
     USER_NOT_FOUND (404,"用户未找到"),
     LOGIN_FAIL (403,"用户名或密码错误"),
+    INVAILID_USER_DATA_TYPE(400,"用户数据类型不正确"),
     ;
     private Integer code;
     private String msg;
