@@ -16,9 +16,18 @@ import java.util.List;
 
 
 public interface UserController {
-
+    /**
+     * 用户注册
+     * @param user
+     * @return
+     */
      ResponseEntity<Integer> register(User user);
 
+    /**
+     * 更新用户信息
+     * @param user
+     * @return
+     */
      ResponseEntity<Integer> updateInfo(User user);
     /**
      * 用户登录（支持手机号，邮箱，用户名等登录方式）
@@ -30,11 +39,12 @@ public interface UserController {
      ResponseEntity<User> login(String loginkey,  String pwd) ;
 
     /**
-     *
-     * @param userName
+     * 数据校验
+     * @param data
+     * @param type
      * @return
      */
-     ResponseEntity<Boolean> checkeckData(@PathVariable("userName") String userName) ;
+     ResponseEntity<Boolean> checkeckData(@PathVariable("data") String data, @PathVariable("type") Integer type) ;
 
      ResponseEntity<User> getUserById(Integer id);
 

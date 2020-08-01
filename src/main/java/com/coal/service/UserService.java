@@ -19,5 +19,5 @@ public interface UserService {
 
     Boolean updatePassword(Integer id, String oldpwd, String newpwd);
 
-    Boolean checkUserName(String userName);
+    Boolean checkData(String data, Integer type);
 }

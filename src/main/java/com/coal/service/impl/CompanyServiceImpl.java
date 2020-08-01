@@ -53,6 +53,7 @@ public class CompanyServiceImpl implements CompanyService {
         return company;
     }
 
+    //TODO 修改查询子公司信息
     public PageResult<Company> getAllCompanies(Integer page, Integer rows, String sortBy, boolean desc, String key) {
         PageHelper.startPage(page, rows);
 
@@ -65,11 +66,13 @@ public class CompanyServiceImpl implements CompanyService {
             example.setOrderByClause(orderByClause);
         }
         example.createCriteria().andEqualTo("status", ConstantClassFiled.NORMAL_STATUS);
+
         List<Company> companyList = companyMapper.selectByExample(example);
 
         if (CollectionUtils.isEmpty(companyList)) {
             throw new CoalException(ExceptionEnum.COMPANY_NOT_FOUND);
         }
+
         PageInfo<Company> result = new PageInfo<>(companyList);
         
         return new PageResult<>(result.getTotal(), page, companyList.size(), companyList, rows);
@@ -90,6 +93,7 @@ public class CompanyServiceImpl implements CompanyService {
                 .map(CompanyServiceImpl::apply).collect(Collectors.toList());
         return companiesNames;
     }
+
     public List<Company> getChirldCompanies(Integer companyId,List<Company> chirldCompanies){
         if(chirldCompanies.size()==0)
             chirldCompanies.add( companyMapper.selectByPrimaryKey(companyId));

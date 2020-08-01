@@ -8,6 +8,7 @@ import com.coal.common.utils.ExceptionEnum;
 import com.coal.mapper.CompanyMapper;
 import com.coal.mapper.RoleMapper;
 import com.coal.mapper.UserMapper;
+import com.coal.pojo.Coal;
 import com.coal.pojo.User;
 import com.coal.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -105,10 +106,22 @@ public class UserServiceImpl implements UserService {
         return userMapper.updateByPrimaryKeySelective(checkUser) == 1;
     }
 
-    public Boolean checkUserName(String userName) {
+    public Boolean checkData(String data, Integer type) {
         //判断数据类型
         User record = new User();
-        record.setUserName(userName);
+
+        switch (type) {
+            case 1:
+                record.setUserName(data);
+                break;
+            case 2:
+                record.setPhone(data);
+                break;
+            case 3:
+                record.setEmail(data);
+            default:
+                throw new CoalException(ExceptionEnum.INVAILID_USER_DATA_TYPE);
+        }
 
         int count = userMapper.selectCount(record);
         return count == 0;

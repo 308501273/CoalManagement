@@ -54,15 +54,10 @@ public class UserControllerImpl implements UserController {
         return ResponseEntity.ok(userService.login(loginkey, pwd));
     }
 
-    /**
-     *
-     * @param userName
-     * @return
-     */
     @GetMapping("check/{data}/{type}")
-    public ResponseEntity<Boolean> checkeckData(@PathVariable("userName") String userName) {
+    public ResponseEntity<Boolean> checkeckData(@PathVariable("data") String data, @PathVariable("type") Integer type) {
         //判断类型
-        return ResponseEntity.ok(userService.checkUserName(userName));
+        return ResponseEntity.ok(userService.checkData(data,type));
     }
 
     @GetMapping
